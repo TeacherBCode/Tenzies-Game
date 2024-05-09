@@ -244,11 +244,15 @@ h3{
 
   .die{
     width: 2.65rem;
-    height: 3rem;
+    height: 3.5rem;
   }
 
   .record-info{
     font-size: 0.75rem;
+  }
+
+  #game-button{
+    padding: 25px;
   }
 
 }
