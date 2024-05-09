@@ -2,6 +2,7 @@ import React from 'react'
 import Die from './components/Die'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
+import Record from './components/Record'
 
 
 
@@ -12,7 +13,16 @@ function App() {
   const [time, setTime] = React.useState(0);
   // state to check stopwatch running or not
   const [isRunning, setIsRunning] = React.useState(false);
+  const [recordShow, setRecordShow] = React.useState(false);
+  const [tenziesPR, setTenziesPR] = React.useState( ()=> (JSON.parse(localStorage.getItem("tenziesPR")) || {
+      rollCount: 100, timer : {
+        minutes: 99,
+        seconds: 99,
+        milliseconds: 99
+      } })
+  )
 
+  
 
   React.useEffect(() => {
     let allHeld = dieValues.every(die => die.isHeld)
@@ -21,17 +31,44 @@ function App() {
       setTenzies(true)
       console.log("You Won!")
       setIsRunning(isRunning => !isRunning)
+      setRecordShow(true)
     }
 
     let anyHeld = dieValues.some(die => die.isHeld)
     if (anyHeld && !isRunning) {
       setIsRunning(isRunning => !isRunning)
     }
-
   }, [dieValues]
   )
 
 
+  React.useEffect(
+    ()=>{
+      if(tenzies && tenziesPR.rollCount > rollCount){
+        setTenziesPR(tenziesPR => ({ ...tenziesPR, 
+                                    rollCount: rollCount}))
+      }
+      
+      if(tenzies &&  tenziesPR.timer.minutes > timer.minutes){
+        setTenziesPR(tenziesPR => ({ ...tenziesPR, timer:{...timer}}))
+      }else if (tenzies &&  tenziesPR.timer.minutes === timer.minutes){
+          if(tenziesPR.timer.seconds > timer.seconds){
+            setTenziesPR(tenziesPR => ({ ...tenziesPR, timer:{...timer}}))
+          }else if(tenziesPR.timer.seconds === timer.seconds){
+            if (tenziesPR.timer.milliseconds > timer.milliseconds){
+              setTenziesPR(tenziesPR => ({ ...tenziesPR, timer:{...timer}}))
+            }
+          }
+      }
+    
+      console.log(tenziesPR)
+    },[tenzies]
+  )
+
+  React.useEffect(
+    () =>   localStorage.setItem("tenziesPR" ,JSON.stringify(tenziesPR))
+    ,[tenziesPR]
+  )
 
 
   function randomNumArr() {
@@ -60,16 +97,27 @@ function App() {
       isHeld={die.isHeld}
       handleClick={() => holdDieFace(die.id)} />)
 
+///////////////////    Record Show  //////////////////// 
+
+  function handleRecordShow(){
+    setRecordShow(recordShow => !recordShow)
+  }
+
+///////////////////    Roll Dice   //////////////////// 
 
   function rollDice() {
-    if (!isRunning) {
-      setIsRunning(isRunning => !isRunning)
+    if(!tenzies){
+      if (!isRunning) {
+        setIsRunning(isRunning => !isRunning)
+      }
+      setRollCount((rollCount) => rollCount += 1)
+      const newValues = randomNumArr()
+      setDieValues(dieValues => dieValues.map((die, ind) =>
+        (die.isHeld === false) ? { ...newValues[ind], id: die.id } : die))
     }
-    setRollCount((rollCount) => rollCount += 1)
-    const newValues = randomNumArr()
-    setDieValues(dieValues => dieValues.map((die, ind) =>
-      (die.isHeld === false) ? { ...newValues[ind], id: die.id } : die))
   }
+
+///////////////////    Reset Game   //////////////////// 
 
   function resetGame() {
     setDieValues(randomNumArr)
@@ -77,6 +125,8 @@ function App() {
     setRollCount(1)
     setTime(0)
     setIsRunning(false)
+    setRecordShow(false)
+
   }
 
   ///////////////////      StopWatch    //////////////////// 
@@ -105,6 +155,7 @@ function App() {
       {tenzies && <Confetti gravity={0.3} />}
       <main>
         <button className='restart' onClick={resetGame} ></button>
+        <button className='high-score' onClick={handleRecordShow}></button>
         <div id="game-info" className="info">
           <h1>Tenzies</h1>
           <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
@@ -118,6 +169,7 @@ function App() {
               {timer.milliseconds.toString().padStart(2, "0")}<span className='mini'>msec </span>
             </h3>
           </div>
+          <Record recordShow={recordShow} record={tenziesPR} />
         </div>
         <div id="game-section" className="info">
           {dieFaces}

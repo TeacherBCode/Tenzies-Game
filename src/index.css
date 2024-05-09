@@ -5,19 +5,42 @@
 
 body {
   margin: 0;
-  padding: 20px;
   width: 100vw;
   height: 100vh;
   background-color: #0B2434;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
+
+/*################## Main-Section ###################*/
+
+main{
+  position: relative;
+  margin:20px auto;
+  padding: 10px auto;
+  box-sizing: content-box;
+  width: 90%;
+  max-width: 600px;
+  height: 80vh;
+  background-color: #F5F5F5 ;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 
 h3{
   margin:10px;
 }
 
 
-/* Restart Button */
-
+/*################## restart Button ###################*/
 
 .restart{
   position: absolute;
@@ -45,27 +68,36 @@ h3{
 }
 
 
+/*################## High-score Btn ###################*/
 
-
-
-main{
-  position: relative;
-  margin: 70px auto;
-  padding: 0;
-  box-sizing: content-box;
-  width: 90%;
-  max-width: 600px;
-  height: 80vh;
-  background-color: #F5F5F5 ;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.high-score{
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  background-color: rgb(245, 221, 162);
+  background-image: url('./assets/high-score.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: rgb(247, 233, 36) 0px 2px 10px ;
+  color: whitesmoke;
+  font-size: 1.2rem;
+  width: 60px;
+  height: 50px;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.high-score:hover{
+  transform: translateY(2px);
+  background-color: rgb(252, 252, 252);
+  box-shadow: gold 0px 0px 20px 3px;
+  width: 70px;
 }
 
 
+
+/*################## Game Info Section ###################*/
 
 .info{
   margin: 0 auto;
@@ -81,8 +113,39 @@ main{
   font-size: 1.2rem;
   width: 75%;
   margin: 5px auto ;
-  color: #4A4E74;
+  color: hsl(234, 22%, 37%);
 }
+
+
+
+/*##################  Roll Count && StopWatch Section ###################*/
+
+.stopwatch-time {
+  text-align: center;
+  color: #123e85;
+  font-size: 1.4rem;
+  margin: 15px auto;
+}
+
+.mini{
+  font-size: 0.75rem;
+}
+
+.record-info{
+  margin:30px auto 10px ;
+  padding: 1px 0;
+  min-width: 25%;
+  max-width: 80%;
+  font-size: 0.9rem;
+  background-color: rgb(14, 75, 172);
+  color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: gold 0px 0px 20px 4px;
+}
+
+
+
+/*################## Game Section Section ###################*/
 
 #game-section{
   margin: 20px auto;
@@ -116,9 +179,14 @@ main{
   background-color: #59E391;
 }
 
+
+
+/*################## Game Roll Dice Button Section ###################*/
+
 #game-button{
   background-color: #5035FF;
   color: whitesmoke;
+  margin: 20px auto 0px ;
   font-size: 1.25rem;
   font-weight: 600;
   width: 60%;
@@ -133,50 +201,14 @@ main{
 }
 
 
-/* ######  StopWatch  ############ */
+/*############################################################*/
+/*################## Media Query Section ###################*/
 
 
-.stopwatch-time {
-  text-align: center;
-  color: #123e85;
-  font-size: 1.4rem;
-}
-
-.mini{
-  font-size: 0.75rem;
-}
-
-.record-info{
-  margin:30px auto 10px ;
-  padding: 1px 0;
-  min-width: 25%;
-  max-width: 80%;
-  font-size: 0.9rem;
-  background-color: rgb(65, 149, 179);
-  color: whitesmoke;
-  border-radius: 8px;
-  
-}
-.record-info:hover{
-  transform: translateY(3px);
-  box-shadow: rgb(24, 206, 227)  3px 3px 20px;
-}
-.record-btn{
-  max-width: 50%;
-}
-
-
-
-
-/* ###########    Media   ###############*/
-
-@media (max-width : 500px){
-  main{
-    height: 80vh;
-  }
+@media (max-width : 600px){
 
   #game-info h1{
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
   #game-info p{
     width: 90%;
@@ -187,6 +219,10 @@ main{
     width:90%
   }
 
+  .stopwatch-time{
+    font-size: 1.2rem;
+  }
+
 
   .restart{
     width: 50px;
@@ -194,6 +230,15 @@ main{
   }
 
   .restart:hover{
+    width:55px;
+  }
+  
+  .high-score{
+    width: 50px;
+    height: 40px;
+  }
+
+  .high-score:hover{
     width:55px;
   }
 
