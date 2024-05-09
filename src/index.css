@@ -225,21 +225,21 @@ h3{
 
 
   .restart{
-    width: 50px;
-    height: 40px;
+    width: 70px;
+    height: 55px;
   }
 
   .restart:hover{
-    width:55px;
+    width:75px;
   }
   
   .high-score{
-    width: 50px;
-    height: 40px;
+    width: 70px;
+    height: 55px;
   }
 
   .high-score:hover{
-    width:55px;
+    width:75px;
   }
 
   .die{
