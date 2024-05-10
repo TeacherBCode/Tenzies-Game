@@ -157,7 +157,7 @@ function App() {
         <button className='restart' onClick={resetGame} ></button>
         <button className='high-score' onClick={handleRecordShow}></button>
         <div id="game-info" className="info">
-          <h1>Tens Game</h1>
+          <h1>Tenzies</h1>
           <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
           <h3 className="stopwatch-time"> Rolls: {rollCount}</h3>
           <div>
