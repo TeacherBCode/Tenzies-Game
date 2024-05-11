@@ -3,7 +3,9 @@ import Die from './components/Die'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 import Record from './components/Record'
-
+import StopWatch from './components/StopWatch'
+import GameTitle from './components/GameTitle'
+import GameSection from './components/GameSection'
 
 
 function App() {
@@ -71,6 +73,8 @@ function App() {
   )
 
 
+///////////////////    Generate Random dice array  //////////////////// 
+
   function randomNumArr() {
     const nums = []
     for (let i = 0; i < 10; i++) {
@@ -83,12 +87,14 @@ function App() {
     return nums
   }
 
+///////////////////   Hold Dice  //////////////////// 
+
   function holdDieFace(id) {
     setDieValues(dieValues => dieValues.map((die) =>
       (id === die.id) ? { ...die, isHeld: !die.isHeld } : die))
   }
 
-
+///////////////////    Render Dice  //////////////////// 
 
   const dieFaces = dieValues.map((die) =>
     <Die
@@ -149,35 +155,20 @@ function App() {
   }
 
 
+///////////////////    Final Render  //////////////////// 
 
   return (
     <>
       {tenzies && <Confetti gravity={0.3} />}
       <main>
-        <button className='restart' onClick={resetGame} ></button>
-        <button className='high-score' onClick={handleRecordShow}></button>
-        <div id="game-info" className="info">
-          <h1>Tenzies</h1>
-          <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
-          <h3 className="stopwatch-time"> Rolls: {rollCount}</h3>
-          <div>
 
-            <h3 className="stopwatch-time">
-              <span>Time: </span>
-              {timer.minutes.toString().padStart(2, "0")}<span className='mini'>min </span>:
-              {timer.seconds.toString().padStart(2, "0")}<span className='mini'>sec </span>:
-              {timer.milliseconds.toString().padStart(2, "0")}<span className='mini'>msec </span>
-            </h3>
-          </div>
-          <Record recordShow={recordShow} record={tenziesPR} />
-        </div>
-        <div id="game-section" className="info">
-          {dieFaces}
-        </div>
-        <div className="info">
-          <button id="game-button" onClick={rollDice}>{tenzies ? "You Won!" : "Roll Dice"}</button>
-        </div>
+        <GameTitle resetGame={resetGame} handleRecordShow={handleRecordShow} />
 
+        <StopWatch timer={timer} rollCount={rollCount}/>
+
+        <Record recordShow={recordShow} record={tenziesPR} />
+
+        <GameSection dieFaces={dieFaces} rollDice={rollDice} tenzies={tenzies}/>
 
       </main>
     </>
